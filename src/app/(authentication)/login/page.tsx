@@ -1,10 +1,14 @@
+"use client";
+
 import React from "react";
 import { Grid, Typography, Box, Paper } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import LoginForm from "@/components/LoginForm";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
   return (
     <Grid
       container
@@ -70,7 +74,7 @@ const Login = () => {
               Log in to oCare doctor’s panel
             </Typography>
           </Box>
-          <LoginForm />
+          <LoginForm router={router} />
 
           <Box
             sx={{

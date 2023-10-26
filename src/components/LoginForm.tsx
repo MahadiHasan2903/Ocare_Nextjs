@@ -11,15 +11,13 @@ import {
   FormControl,
   CircularProgress,
 } from "@mui/material";
-import { useRouter } from "next/router";
 import { countries } from "@/utils/countryCode";
 import Link from "next/link";
 
-const LoginForm = () => {
+const LoginForm = ({ router }: any) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState<any>(null);
   const [selectedCountry, setSelectedCountry] = useState(countries[0].iso);
 
@@ -48,6 +46,12 @@ const LoginForm = () => {
       );
 
       if (response.status === 200) {
+        router.push({
+          pathname: "/anotherpage",
+          query: {
+            loginData: loginData,
+          },
+        });
       } else {
         setError("OTP request failed. Please check your credentials.");
       }
@@ -57,7 +61,6 @@ const LoginForm = () => {
       setLoading(false);
     }
   };
-
   return (
     <FormControl
       sx={{

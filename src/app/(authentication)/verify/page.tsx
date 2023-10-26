@@ -1,10 +1,22 @@
+// "use client";
+
 import React from "react";
 import { Grid, Typography, Box, Paper } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import VerifyForm from "@/components/VerifyForm";
+import { useSearchParams } from "next/navigation";
 
-const Verify = () => {
+interface LoginData {
+  country_code: string;
+  phone_number: string;
+  password: string;
+  role: string;
+}
+
+const Verify = ({ searchParams }: any) => {
+  console.log(searchParams.loginData);
+
   return (
     <Grid
       container
