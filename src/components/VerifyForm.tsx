@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -10,12 +8,45 @@ import {
   FormControl,
   CircularProgress,
 } from "@mui/material";
-const VerifyForm = () => {
-  const [error, setError] = useState(null);
+import { PropsTypes } from "@/utils/types";
+
+const VerifyForm = ({ router, country_code, phone_number }: PropsTypes) => {
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      const verifyData = {
+        otp: otp,
+        country_code,
+        phone_number,
+      };
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(verifyData),
+      });
+
+      if (response.status === 200) {
+        router.push("/dashboard");
+      } else {
+        setError("Login failed. Please check your OTP.");
+      }
+    } catch (err) {
+      setError("Login failed. Please check your OTP.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <FormControl
       sx={{
@@ -25,30 +56,41 @@ const VerifyForm = () => {
         border: "none",
       }}
     >
-      <TextField
-        type="text"
-        label="OTP"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={otp}
-        onChange={(e) => setOtp(e.target.value)}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+      <form onSubmit={handleSubmit}>
+        <TextField
+          type="text"
+          label="OTP"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={otp}
+          onChange={(e) => setOtp(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
 
-      {error && (
-        <Typography variant="body2" color="error" sx={{ marginBottom: "1px" }}>
-          {error}
-        </Typography>
-      )}
+        {error && (
+          <Typography
+            variant="body2"
+            color="error"
+            sx={{ marginBottom: "1px" }}
+          >
+            {error}
+          </Typography>
+        )}
 
-      <Box sx={{ backgroundColor: "#1976d2" }}>
-        <Button variant="contained" color="primary" fullWidth>
-          Verify
-        </Button>
-      </Box>
+        <Box sx={{ backgroundColor: "#1976d2" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleSubmit}
+          >
+            Verify
+          </Button>
+        </Box>
+      </form>
 
       <Box
         sx={{

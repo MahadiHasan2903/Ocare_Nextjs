@@ -13,22 +13,25 @@ import {
 } from "@mui/material";
 import { countries } from "@/utils/countryCode";
 import Link from "next/link";
+import { LoginResponse } from "@/utils/types";
 
 const LoginForm = ({ router }: any) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);
-  const [selectedCountry, setSelectedCountry] = useState(countries[0].iso);
+  const [selectedCountryCode, setSelectedCountryCode] = useState(
+    countries[0].iso
+  );
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       setLoading(true);
 
       const loginData = {
-        country_code: selectedCountry,
+        country_code: selectedCountryCode,
         phone_number: phoneNumber,
         password,
         role: "doctor",
@@ -45,15 +48,16 @@ const LoginForm = ({ router }: any) => {
         }
       );
 
-      if (response.status === 200) {
-        router.push({
-          pathname: "/anotherpage",
-          query: {
-            loginData: loginData,
-          },
-        });
+      const loginResponse: LoginResponse = await response.json();
+
+      if (loginResponse.success) {
+        router.push(
+          `/verify?country_code=${encodeURIComponent(
+            selectedCountryCode
+          )}&phoneNumber=${phoneNumber}`
+        );
       } else {
-        setError("OTP request failed. Please check your credentials.");
+        setError(error);
       }
     } catch (err) {
       setError("Login failed. Please check your credentials.");
@@ -76,8 +80,8 @@ const LoginForm = ({ router }: any) => {
             <Select
               labelId="country-select-label"
               id="country-select"
-              value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
+              value={selectedCountryCode}
+              onChange={(e) => setSelectedCountryCode(e.target.value)}
             >
               {countries.map((option) => (
                 <MenuItem key={option.code} value={option.iso}>
