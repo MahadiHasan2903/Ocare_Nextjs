@@ -1,3 +1,20 @@
+import NextAuth from "next-auth/next";
+
+declare module "next-auth" {
+  export interface Session {
+    success: boolean;
+    message: string;
+    data: {
+      user_roles: string[];
+      user_details: UserProfile;
+      access_token: string;
+      session_id: string;
+      token_type: string;
+      expires_in: number;
+    };
+  }
+}
+
 export type LoginResponse = {
   success: boolean;
   message: string;
@@ -72,18 +89,5 @@ export interface UserProfile {
     refer_by: number | null;
     created_at: string;
     updated_at: string;
-  };
-}
-
-export interface ResponseData {
-  success: boolean;
-  message: string;
-  data: {
-    user_roles: string[];
-    user_details: UserProfile;
-    access_token: string;
-    session_id: string;
-    token_type: string;
-    expires_in: number;
   };
 }

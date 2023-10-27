@@ -9,42 +9,53 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { PropsTypes } from "@/utils/types";
+import { signIn } from "next-auth/react";
 
 const VerifyForm = ({ router, country_code, phone_number }: PropsTypes) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     setLoading(true);
+
+  //     const verifyData = {
+  //       otp: otp,
+  //       country_code,
+  //       phone_number,
+  //     };
+
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}login`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(verifyData),
+  //     });
+
+  //     if (response.status === 200) {
+  //       router.push("/dashboard");
+  //     } else {
+  //       setError("Login failed. Please check your OTP.");
+  //     }
+  //   } catch (err) {
+  //     setError("Login failed. Please check your OTP.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-
-      const verifyData = {
-        otp: otp,
-        country_code,
-        phone_number,
-      };
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(verifyData),
-      });
-
-      if (response.status === 200) {
-        router.push("/dashboard");
-      } else {
-        setError("Login failed. Please check your OTP.");
-      }
-    } catch (err) {
-      setError("Login failed. Please check your OTP.");
-    } finally {
-      setLoading(false);
-    }
+    signIn("credentials", {
+      otp: otp,
+      country_code,
+      phone_number,
+    });
   };
 
   return (

@@ -4,8 +4,11 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session } = useSession();
+  console.log({ session });
   return (
     <Box
       sx={{
