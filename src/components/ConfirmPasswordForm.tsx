@@ -11,14 +11,14 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-const ConfirmPasswordForm = () => {
-  const [otp, setOtp] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+const ConfirmPasswordForm: React.FC = () => {
+  const [otp, setOtp] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e: React.FormEvent) => {};
   return (
     <FormControl
       sx={{

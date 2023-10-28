@@ -1,7 +1,13 @@
+import ScrollingPatients from "@/components/ScrollingPatients";
+import { Box } from "@mui/material";
 import React from "react";
 
-const PatientsCard = () => {
-  return <div>PatientsCard</div>;
+const PatientsList = () => {
+  return (
+    <Box>
+      <ScrollingPatients />
+    </Box>
+  );
 };
 
-export default PatientsCard;
+export default PatientsList;
