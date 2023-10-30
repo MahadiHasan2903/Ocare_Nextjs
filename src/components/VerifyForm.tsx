@@ -35,20 +35,17 @@ const VerifyForm = () => {
     try {
       setLoading(true);
 
-      const res: any = await signIn("credentials", {
+      const res = await signIn("credentials", {
         otp: otp,
         country_code,
         phone_number,
-        redirect: true,
+        redirect: false,
       });
 
-      if (res && res.status === 200) {
-        if (session) {
-          console.log("Session object:", session);
-          router.push("/dashboard");
-        }
-      } else {
+      if (res?.error) {
         setError("Login failed. Please check your OTP.");
+      } else {
+        router.push("/dashboard");
       }
     } catch (error) {
       setError("An error occurred during login. Please try again.");

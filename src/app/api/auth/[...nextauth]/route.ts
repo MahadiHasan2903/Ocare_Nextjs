@@ -28,7 +28,6 @@ const handler = NextAuth({
             country_code: credentials?.country_code,
             phone_number: credentials?.phone_number,
           };
-          console.log("Authorize Function Payload:", payload);
           const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}login`, {
             method: "POST",
             body: JSON.stringify(payload),
@@ -37,7 +36,6 @@ const handler = NextAuth({
             },
           });
           const user = await res.json();
-          // console.log("Authorize Function User:", user);
 
           if (!res.ok) {
             throw new Error(user.message);
@@ -59,14 +57,11 @@ const handler = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      // console.log("JWT Callback Token:", token);
       return { ...token, ...user };
     },
     async session({ session, token, user }) {
-      // console.log("Session Callback Token:", token);
       session.user = token as any;
       return session;
-      console.log(session);
     },
   },
 });
