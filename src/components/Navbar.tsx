@@ -12,8 +12,6 @@ const Navbar = () => {
   const avatar: string =
     session?.user?.data?.user_details?.profile?.profile_avatar?.url;
 
-  console.log(name, avatar);
-
   return (
     <Box
       sx={{

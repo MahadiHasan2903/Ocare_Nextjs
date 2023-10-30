@@ -79,7 +79,6 @@ const VerifyForm = () => {
               margin="normal"
               value={otp}
               onChange={(e) => {
-                console.log("OTP input changed:", e.target.value);
                 setOtp(e.target.value);
               }}
               InputLabelProps={{

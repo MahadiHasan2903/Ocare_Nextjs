@@ -50,9 +50,7 @@ const LoginForm = () => {
         }
       );
 
-      const loginResponse: LoginResponse = await response.json();
-
-      if (loginResponse.success) {
+      if (response.status === 200) {
         router.push(
           `/verify?country_code=${encodeURIComponent(
             selectedCountryCode

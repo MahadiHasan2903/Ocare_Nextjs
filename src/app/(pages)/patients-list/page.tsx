@@ -3,11 +3,7 @@ import { Box } from "@mui/material";
 import React from "react";
 
 const PatientsList = () => {
-  return (
-    <Box>
-      <PatientsTable />
-    </Box>
-  );
+  return <PatientsTable />;
 };
 
 export default PatientsList;

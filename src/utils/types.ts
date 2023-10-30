@@ -15,11 +15,7 @@ declare module "next-auth" {
   }
 }
 
-export type LoginResponse = {
-  success: boolean;
-  message: string;
-  data: any;
-};
+
 
 export interface LoginData {
   country_code: string;

@@ -10,14 +10,24 @@ import VaccinesIcon from "@mui/icons-material/Vaccines";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
+import { redirect, useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 const Sidebar = () => {
   const [selectedBox, setSelectedBox] = useState<string | null>("");
+  const router = useRouter();
+  const session = useSession();
 
   const handleBoxClick = (boxId: string) => {
     setSelectedBox(boxId);
   };
 
+  const handleLogout = async () => {
+    if (session) {
+      await signOut();
+    }
+    router.push("/");
+  };
   const isBoxSelected = (boxId: string) => selectedBox === boxId;
 
   const boxStyles = {
@@ -191,6 +201,7 @@ const Sidebar = () => {
             color: "grey",
             fontSize: "16px",
           }}
+          onClick={handleLogout}
         >
           <PanoramaFishEyeIcon />
           <Link

@@ -35,6 +35,8 @@ const PatientsTable: React.FC = () => {
           }
         );
 
+        console.log(response);
+
         if (response.ok) {
           const data = await response.json();
           setPatients(data);
@@ -86,7 +88,6 @@ const PatientsTable: React.FC = () => {
           component={Paper}
           sx={{
             marginRight: "5px",
-            maxHeight: rowsPerPage > 10 ? "75vh" : "none",
             overflowY: rowsPerPage > 10 ? "scroll" : "auto",
           }}
         >
