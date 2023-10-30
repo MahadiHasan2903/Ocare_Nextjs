@@ -41,8 +41,14 @@ const ScrollingPatients: React.FC = () => {
             headers: {
               "Content-Type": "application/json",
             },
+            mode: "no-cors",
           }
         );
+
+        if (!response.ok) {
+          throw new Error(`Fetch failed with status ${response.status}`);
+        }
+
         const data: Patient[] = await response.json();
         setPatients(data);
       } catch (error) {

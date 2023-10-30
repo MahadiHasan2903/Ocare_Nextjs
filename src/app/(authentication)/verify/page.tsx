@@ -1,21 +1,12 @@
-"use client";
 
 import React from "react";
 import { Grid, Typography, Box, Paper } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import VerifyForm from "@/components/VerifyForm";
-import { useRouter, useSearchParams } from "next/navigation";
 
 const Verify = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const country_code = decodeURIComponent(searchParams.get("country_code"));
-  const phone_number = searchParams.get("phoneNumber");
-
-  console.log(country_code);
-  console.log(phone_number);
+  
 
   return (
     <Grid
@@ -87,9 +78,7 @@ const Verify = () => {
             </Typography>
           </Box>
           <VerifyForm
-            router={router}
-            country_code={country_code}
-            phone_number={phone_number}
+           
           />
 
           <Box

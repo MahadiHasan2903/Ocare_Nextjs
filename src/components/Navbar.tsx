@@ -8,7 +8,12 @@ import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session } = useSession();
-  console.log({ session });
+  const name: string = session?.user?.data?.user_details?.profile?.name;
+  const avatar: string =
+    session?.user?.data?.user_details?.profile?.profile_avatar?.url;
+
+  console.log(name, avatar);
+
   return (
     <Box
       sx={{
@@ -52,9 +57,9 @@ const Navbar = () => {
           marginTop: "20px",
         }}
       >
-        <Typography sx={{ marginTop: "10px" }}>Md. Mahadi Hasan</Typography>
+        <Typography sx={{ marginTop: "10px" }}>{name}</Typography>
         <Image
-          src="/logo.png"
+          src={avatar}
           width={40}
           height={40}
           alt="avatar"
