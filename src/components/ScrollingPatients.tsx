@@ -9,6 +9,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Patient } from "@/utils/types";
+import { useSession } from "next-auth/react";
 
 const ScrollingPatients: React.FC = () => {
   const [visiblePatients, setVisiblePatients] = useState<number>(5);
@@ -16,7 +17,9 @@ const ScrollingPatients: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const { data: session } = useSession();
 
+  const token: string | undefined = session?.user?.data?.access_token;
   const loadMorePatients = () => {
     setLoading(true);
     if (visiblePatients + 5 <= patients.length) {
@@ -36,28 +39,35 @@ const ScrollingPatients: React.FC = () => {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}doctor-panel/patient/list`,
           {
-            cache: "force-cache",
             method: "GET",
+            cache: "force-cache",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
-            mode: "no-cors",
           }
         );
 
-        if (!response.ok) {
-          throw new Error(`Fetch failed with status ${response.status}`);
-        }
+        if (response.ok) {
+          const data = await response.json();
 
-        const data: Patient[] = await response.json();
-        setPatients(data);
+          console.log(data);
+
+          if (data.success) {
+            setPatients(data.data);
+          } else {
+            console.error("Error in API response:", data.message);
+          }
+        } else {
+          console.error("Error fetching data");
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchPatients();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -87,7 +97,7 @@ const ScrollingPatients: React.FC = () => {
   return (
     <Box
       sx={{
-        maxHeight: "92vh",
+        height: "92vh",
         overflowY: "scroll",
         position: "relative",
       }}

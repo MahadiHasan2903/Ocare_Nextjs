@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -22,12 +22,6 @@ const Sidebar = () => {
     setSelectedBox(boxId);
   };
 
-  const handleLogout = async () => {
-    if (session) {
-      await signOut();
-    }
-    router.push("/");
-  };
   const isBoxSelected = (boxId: string) => selectedBox === boxId;
 
   const boxStyles = {
@@ -36,12 +30,12 @@ const Sidebar = () => {
     borderRadius: "5px",
     display: "flex",
     alignItems: "center",
-    marginTop: "30px",
+    userSelect: "none",
+    marginTop: "20px",
   };
 
   const boxStylesBottom = {
-    cursor: "pointer",
-
+    userSelect: "none",
     padding: "10px",
     borderRadius: "5px",
     display: "flex",
@@ -58,94 +52,114 @@ const Sidebar = () => {
       </Box>
 
       <Box sx={{ marginTop: "50px" }}>
-        <Box
-          sx={{
-            ...boxStyles,
-            backgroundColor: isBoxSelected("dashboard") ? "blue" : "white",
+        <Link
+          href="/dashboard"
+          style={{
+            textDecoration: "none",
             color: isBoxSelected("dashboard") ? "#ffffff" : "#000000",
           }}
-          onClick={() => handleBoxClick("dashboard")}
         >
-          <GridViewIcon />
-          <Link
-            href="/dashboard"
-            style={{
-              textDecoration: "none",
+          <Box
+            sx={{
+              ...boxStyles,
+              backgroundColor: isBoxSelected("dashboard") ? "blue" : "white",
               color: isBoxSelected("dashboard") ? "#ffffff" : "#000000",
-              marginLeft: "10px",
-              fontSize: "18px",
             }}
+            onClick={() => handleBoxClick("dashboard")}
           >
-            Dashboard
-          </Link>
-        </Box>
-        <Box
-          sx={{
-            ...boxStyles,
-            backgroundColor: isBoxSelected("create-prescription")
-              ? "blue"
-              : "white",
+            <GridViewIcon />
+            <Typography sx={{ marginLeft: "10px", fontSize: "18px" }}>
+              Dashboard
+            </Typography>
+          </Box>
+        </Link>
+        <Link
+          href="/create-prescription"
+          style={{
+            textDecoration: "none",
             color: isBoxSelected("create-prescription") ? "#ffffff" : "#000000",
           }}
-          onClick={() => handleBoxClick("create-prescription")}
         >
-          <VaccinesIcon />
-          <Link
-            href="/create-prescription"
-            style={{
-              textDecoration: "none",
+          <Box
+            sx={{
+              ...boxStyles,
+              backgroundColor: isBoxSelected("create-prescription")
+                ? "blue"
+                : "white",
               color: isBoxSelected("create-prescription")
                 ? "#ffffff"
                 : "#000000",
-              marginLeft: "10px",
-              fontSize: "18px",
             }}
+            onClick={() => handleBoxClick("create-prescription")}
           >
-            Prescription
-          </Link>
-        </Box>
-        <Box
-          sx={{
-            ...boxStyles,
-            backgroundColor: isBoxSelected("patients-list") ? "blue" : "white",
+            <VaccinesIcon />
+            <Typography
+              sx={{
+                marginLeft: "10px",
+                fontSize: "18px",
+              }}
+            >
+              Prescription
+            </Typography>
+          </Box>
+        </Link>
+        <Link
+          href="/patients-list"
+          style={{
+            textDecoration: "none",
             color: isBoxSelected("patients-list") ? "#ffffff" : "#000000",
           }}
-          onClick={() => handleBoxClick("patients-list")}
         >
-          <FormatListBulletedIcon />
-          <Link
-            href="/patients-list"
-            style={{
-              textDecoration: "none",
+          <Box
+            sx={{
+              ...boxStyles,
+              backgroundColor: isBoxSelected("patients-list")
+                ? "blue"
+                : "white",
               color: isBoxSelected("patients-list") ? "#ffffff" : "#000000",
-              marginLeft: "10px",
-              fontSize: "18px",
             }}
+            onClick={() => handleBoxClick("patients-list")}
           >
-            Patients List
-          </Link>
-        </Box>
-        <Box
-          sx={{
-            ...boxStyles,
-            backgroundColor: isBoxSelected("patients-card") ? "blue" : "white",
+            <FormatListBulletedIcon />
+            <Typography
+              sx={{
+                marginLeft: "10px",
+                fontSize: "18px",
+              }}
+            >
+              PatientsList
+            </Typography>
+          </Box>
+        </Link>
+
+        <Link
+          href="/patients-card"
+          style={{
+            textDecoration: "none",
             color: isBoxSelected("patients-card") ? "#ffffff" : "#000000",
           }}
-          onClick={() => handleBoxClick("patients-card")}
         >
-          <RecentActorsIcon />
-          <Link
-            href="/patients-card"
-            style={{
-              textDecoration: "none",
+          <Box
+            sx={{
+              ...boxStyles,
+              backgroundColor: isBoxSelected("patients-card")
+                ? "blue"
+                : "white",
               color: isBoxSelected("patients-card") ? "#ffffff" : "#000000",
-              marginLeft: "10px",
-              fontSize: "18px",
             }}
+            onClick={() => handleBoxClick("patients-card")}
           >
-            Patients Card
-          </Link>
-        </Box>
+            <RecentActorsIcon />
+            <Typography
+              sx={{
+                marginLeft: "10px",
+                fontSize: "18px",
+              }}
+            >
+              Patients Card
+            </Typography>
+          </Box>
+        </Link>
       </Box>
 
       <Box sx={{ marginTop: "200px" }}>
@@ -165,6 +179,7 @@ const Sidebar = () => {
               textDecoration: "none",
               marginLeft: "10px",
               color: isBoxSelected("supports") ? "#ffffff" : "grey",
+              cursor: "pointer",
             }}
           >
             Support
@@ -187,6 +202,7 @@ const Sidebar = () => {
             style={{
               textDecoration: "none",
               marginLeft: "10px",
+              cursor: "pointer",
               color: isBoxSelected("settings") ? "#ffffff" : "grey",
             }}
           >
@@ -201,7 +217,9 @@ const Sidebar = () => {
             color: "grey",
             fontSize: "16px",
           }}
-          onClick={handleLogout}
+          onClick={() => {
+            signOut({ callbackUrl: "/login" });
+          }}
         >
           <PanoramaFishEyeIcon />
           <Link
@@ -210,6 +228,7 @@ const Sidebar = () => {
               textDecoration: "none",
               marginLeft: "10px",
               color: "grey",
+              cursor: "pointer",
             }}
           >
             Logout

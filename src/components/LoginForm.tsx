@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { countries } from "@/utils/countryCode";
 import Link from "next/link";
-import { LoginResponse } from "@/utils/types";
+
 import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
@@ -56,12 +56,13 @@ const LoginForm = () => {
             selectedCountryCode
           )}&phoneNumber=${phoneNumber}`
         );
+        setLoading(false);
       } else {
         setError("Login failed. Please check your credentials");
+        setLoading(false);
       }
     } catch (err) {
       setError("Login failed. Please check your credentials.");
-    } finally {
       setLoading(false);
     }
   };

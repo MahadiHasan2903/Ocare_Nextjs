@@ -56,16 +56,19 @@ const Navbar = () => {
         }}
       >
         <Typography sx={{ marginTop: "10px" }}>{name}</Typography>
-        <Image
-          src={avatar}
-          width={40}
-          height={40}
-          alt="avatar"
-          style={{
-            marginLeft: "25px",
-            marginRight: "20px",
-          }}
-        />
+
+        {avatar && (
+          <Image
+            src={avatar && avatar}
+            width={40}
+            height={40}
+            alt="avatar"
+            style={{
+              marginLeft: "25px",
+              marginRight: "20px",
+            }}
+          />
+        )}
       </Box>
     </Box>
   );

@@ -33,6 +33,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
             height: "90%",
             background: "#f9f9f9",
             padding: "20px",
+            marginBottom: "10px",
           }}
         >
           {children}

@@ -20,9 +20,7 @@ const handler = NextAuth({
         },
       },
       async authorize(credentials, req) {
-        console.log("autorize");
         try {
-          console.log(credentials);
           const payload = {
             otp: credentials?.otp,
             country_code: credentials?.country_code,

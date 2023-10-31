@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Grid, Typography, Box, Paper } from "@mui/material";
 import Image from "next/image";
@@ -6,8 +5,6 @@ import Link from "next/link";
 import VerifyForm from "@/components/VerifyForm";
 
 const Verify = () => {
-  
-
   return (
     <Grid
       container
@@ -62,24 +59,7 @@ const Verify = () => {
             <Image src="/logo.png" width={48} height={48} alt="logo" />
           </Box>
 
-          <Box sx={{ padding: "20px", maxWidth: "400px", border: "none" }}>
-            <Typography variant="h4" sx={{ fontWeight: "800" }}>
-              Verify
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                marginTop: "20px",
-                fontWeight: "700",
-                fontSize: "16px",
-              }}
-            >
-              Enter the OTP verification code that sent to 16******24
-            </Typography>
-          </Box>
-          <VerifyForm
-           
-          />
+          <VerifyForm />
 
           <Box
             sx={{
